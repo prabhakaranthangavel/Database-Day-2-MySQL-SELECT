@@ -1,0 +1,213 @@
+Contents
+
+1.Select - distinct, group by, offset, order by, limit and Examples
+
+2.Summary of the Keywords
+
+*************************************************************************************************************************
+
+2.Summary of the Keywords
+
+DQL : Data Query Language
+    (table க்குள் records ஐ சேர்த்த பின்பு நமக்கு தேவையான குறிப்பிட்ட record ஐ தேர்ந்தெடுத்து பார்க்க பயன்படுத்தும் language)
+
+
+    properties :
+        *SELECT
+
+                ************************************************************
+
+SELECT
+
+1.View all the records of the table
+  ஒரு table ல் உள்ள அனைத்து records யும் view செய்வதற்கு
+
+  select * from table_name;
+
+  select * from movies;
+  movies என்ற table ல் உள்ள அனைத்து தகவல்களையும் காட்டும்.
+
+
+
+2.To view only the records in the specified column
+  குறிப்பிட்ட column ல் உள்ள records மட்டும் view செய்வதற்கு
+
+  select column_name, column_name, etc , from table_name;
+
+  select title,director from movies;
+  movies என்ற table ல் உள்ள title,director தகவல்களை மட்டும் காட்டும்.
+
+
+
+3.A condition is required to retrieve specific information in that column in the table of the one database.
+  Following are the ways to give it:
+  ஒரே databaseன் tableல் உள்ள அந்த columnல் உள்ள குறிப்பிட்ட தகவல்களை எடுக்க condition தேவைப்படுகிறது.
+  அதை பின்வரும் அதை கொடுப்பதற்கான வழிகள்:
+
+  select * from table_name where column_name {operator} "condition";
+
+  select * from payments where paymentDate >= "2005-01-01";
+  01-01-2005 க்கு பிறகான தகவல்களை காட்டும்.
+
+
+
+4.Ways to give two or more conditions
+  இரண்டு அல்லது அதற்கு மேற்பட்ட conditions கொடுப்பதற்கான வழிகள்:
+
+  Use "AND or OR" key to match the condition.
+  condition ஐ பொருத்து "AND அல்லது OR" என்ற key ஐ பயன்படுத்தவும்.
+
+  select * from table_name where column_name {operator} "condition" and {operator} "condition";
+  
+  select * from payments where paymentDate >= "2005-01-01" and amount >= 50000;
+  01-01-2005 க்கு பிறகு மற்றும் 50000 க்கு மேல் உள்ள தகவல்களை காட்டும்.
+  
+
+
+5.Ways to get unique output
+  unique ஆன output ஐ பெறுவதற்கான வழிகள்:
+
+  Use "distinct" key for that.
+  அதற்காக "distinct" என்ற key ஐ பயன்படுத்தவும்.
+
+  select distinct (record_name) from table_name;
+  
+  select distinct (country) from customers;
+  country ன் பெயர்களை மட்டும் unique க்காக காட்டும்.
+
+
+
+6.To find minimum or maximum, value or record
+  minimum அல்லது maximum , value அல்லது record ஐ கண்டுபிடிக்க
+
+  Use "min or max" key for that.
+  அதற்காக "min or max" என்ற key ஐ பயன்படுத்தவும்.
+
+  select min (record_name) from table_name;
+
+  select max (record_name) from table_name;
+
+  select min (amount) from payments;
+  payments என்ற table ல் amount என்ற record ல் minimum value ஐ காட்டும்.
+
+
+
+7.  or
+
+  select * from table_name where column_name = (select min (column_name) from table_name);
+  select * from payments where amount = 645.56;
+
+  select * from table_name where column_name = (select max (column_name) from table_name);
+
+
+
+8.To find the total of a record or a table
+  ஒரு record ன் அல்லது ஒரு table ன் total ஐ கண்டறிய
+
+  Use "sum and group by" key for that.
+  அதற்காக "sum மற்றும் group by " என்ற key ஐ பயன்படுத்தவும்.
+
+  select column_name, sum (record_name) from table_name group by column_name;
+
+  select customerNumber, sum(amount) from payments group by customerNumber;
+  payments என்ற table ல் amount என்ற record ல் sum of value ஐ காட்டும்.
+  customerNumber ஐ வைத்து group செய்கிறோம்.
+
+
+
+9.To extract the value
+  value ஐ பிரித்தெடுக்க
+
+  select column_name(column_name) from table_name;
+
+  select year(paymentDate) from payments;
+  payments என்ற table ல் year என்ற record ல் உள்ள வருடங்களை காட்டும்.
+
+
+
+10.To check the total amount for a year
+   ஒரு வருடத்திற்கான amount ஐ total செய்து பார்க்க
+
+   select * from table_name where column_name (record_name) = condition;
+
+   select * from payments where year (paymentDate) = 2004;
+   2004 ஆம் வருடத்தில் உள்ள amount ஐ total செய்து காட்டும்.
+
+
+
+11.
+   ஒரு table ல் உள்ள records ல் 4 or 5 வருடங்கள்(2004,2005,2006,2010)மற்றும் அதனுடைய amount 
+   கொடுக்கப்பட்டுள்ளன.அவை அனைத்தையும் ஒன்று சேர்த்து அதாவது ஒவ்வொரு 
+   வருடத்தின் உடைய amount ஐ total செய்து group ஆக காட்டுவதற்கு
+
+   select column_name (column_name) as column_name, sum (column_name) as column_name from group by (column_name;)
+  
+   select year (paymentDate) as year, sum (amount) as totalAmount from payments group by (paymentDate);
+   2004,2005,2006,2010 ஆகிய ஒவ்வொரு வருடத்தின் amount ஐ total செய்து காட்டும்.
+   அதை group செய்து காட்டும்.
+
+
+
+12.Sorted in ascending order and descending order
+   Ascending order மற்றும் descending order ல் வரிசைப்படுத்தி காட்ட
+
+   Use "asc or desc" key for that.
+   அதற்காக "asc or desc" என்ற key ஐ பயன்படுத்தவும்.
+
+   select customerNumber , sum (amount) as totalAmount from payments group by customerNumber order by totalAmount asc;
+   select customerNumber , sum (amount) as totalAmount from payments group by customerNumber order by totalAmount desc;
+
+   customerNumber மற்றும் amount ஆனது வரிசையாக ஒழுங்கான முறையில் வரிசைப்படுத்தி இருக்கும்.
+
+
+
+13.Also find out who has done top 3 transaction or big amount
+   இதனுடன் டாப் 3 transaction அல்லது big amount யார் செய்துள்ளார்கள் என்பதை கண்டுபிடிக்க 
+
+   Use "limit" key for that.
+   அதற்காக "limit" என்ற key ஐ பயன்படுத்தவும்.
+
+   select customerNumber , sum (amount) as totalAmount from payments group by customerNumber order by totalAmount desc limit 3;
+
+   இப்பொழுது எந்த 3 பேர் அதிகமான big amount ஐ transaction செய்து உள்ளார்களோ 
+   அவர்களின் தகவல்களை காட்டும்.
+
+
+
+14.Exclude the information of the three people shown above and display the information of the three people next to it
+   மேலே காட்டிய மூன்று பேரின் தகவல்களை தவிர்த்து அதற்கு அடுத்தபடியாக உள்ள மூன்று பேரின் தகவல்களை காட்ட
+
+   Use "offset" key for that.
+   அதற்காக "offset" என்ற key ஐ பயன்படுத்தவும்.
+
+   select customerNumber , sum (amount) as totalAmount from payments group by customerNumber order by totalAmount desc limit 3 offset 3;
+
+   மேலே காட்டிய அந்த மூன்று பேரை தவிர்த்து அதற்கு அடுத்தபடியாக உள்ள அடுத்த மூன்று பேரின் தகவல்களை நமக்கு காட்டும்.
+
+*************************************************************************************************************************
+
+1.Select - distinct, group by, offset, order by, limit and Examples
+
+    3.DQL : Data Query Language
+    (table க்குள் records ஐ சேர்த்த பின்பு நமக்கு தேவையான குறிப்பிட்ட record ஐ தேர்ந்தெடுத்து பார்க்க பயன்படுத்தும் language)
+
+    ***SELECT : To fetch data from the database
+
+              => View all the records of the table
+                 ஒரு table ல் உள்ள அனைத்து records யும் view செய்வதற்கு
+
+                    query  : select * from table_name;
+                    Example: select * from flights;
+
+                    output : 6 rows in set
+
+
+              => To view only the records in the specified column
+                 குறிப்பிட்ட column ல் உள்ள records மட்டும் view செய்வதற்கு
+
+                    query  : select column_name, column_name, etc , from table_name;
+                    Example: select dep_time, sched_dep_time, dep_delay, arr_time from flights;
+
+                    output : flights என்ற table ல் dep_time, sched_dep_time, dep_delay, arr_time என்ற column ல் உள்ள records மட்டும் view ஆகும்.
+
+*************************************************************************************************************************
