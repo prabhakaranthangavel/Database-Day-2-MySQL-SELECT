@@ -1,4 +1,4 @@
-# MySQL-Day-2-SELECT
+# Database-MySQL-Day-2-SELECT
 
-👀 It contains MySQL SELECT Methods with Examples 👀
+👀 It contains Database-MySQL SELECT Methods with Examples 👀
 
